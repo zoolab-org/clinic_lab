@@ -1,0 +1,9 @@
+services:
+  web:
+    build: .
+    restart: unless-stopped
+    ports:
+      - "8101:80"
+    volumes:
+      - ./nginx.conf:/nginx.php.conf:ro
+      - ./html:/html:ro
