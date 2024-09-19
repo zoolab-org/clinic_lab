@@ -19,7 +19,7 @@ Please note that this lab *requires a significant amount of local storage*, as c
 
 ## Run the automation testing plan
 
-- Show the **Automation** Tab via the menu **`View > Show Tab > Automation Tab**
+- Show the **Automation** Tab via the menu **View > Show Tab > Automation Tab**
 - Load the pre-configured plan at `/home/zap/files/FullScanDvwaAuth.yaml`
 - Click `Run Plan ...` -- It will scan vulnerabilities for the local [DVWA](https://github.com/digininja/DVWA) site
 - Check the recognized vulnerabilities from the **Alerts** Tab.
