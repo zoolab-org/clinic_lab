@@ -1,4 +1,4 @@
-# Lab for Cyberclinic Course @ NYCU
+# Lab for Cybersecurity Clinic Course @ NYCU
 
 Please follow the README instructions in each of the lab directories.
 
