@@ -1,0 +1,3 @@
+[submodule "lab_zap/dvwa"]
+	path = lab_zap/dvwa
+	url = https://github.com/digininja/DVWA.git
