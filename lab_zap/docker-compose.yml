@@ -1,0 +1,47 @@
+volumes:
+  dvwa:
+
+networks:
+  dvwa:
+
+services:
+  zap:
+    image: zaproxy/zap-stable:latest
+    networks:
+      - default
+      - dvwa
+    restart: unless-stopped
+    volumes:
+      - ./files:/home/zap/files
+    ports:
+      - 8080:8080
+      - 8090:8090
+    user: zap
+    command: zap-webswing.sh
+
+  dvwa:
+    image: local/dvwa
+    pull_policy: build
+    build: ./_dvwa
+    environment:
+      - DB_SERVER=db
+    depends_on:
+      - db
+    networks:
+      - dvwa
+    ports:
+      - 127.0.0.1:4280:80
+    restart: unless-stopped
+
+  db:
+    image: mariadb:10
+    environment:
+      - MYSQL_ROOT_PASSWORD=dvwa
+      - MYSQL_DATABASE=dvwa
+      - MYSQL_USER=dvwa
+      - MYSQL_PASSWORD=p@ssw0rd
+    volumes:
+      - dvwa:/var/lib/mysql
+    networks:
+      - dvwa
+    restart: unless-stopped
