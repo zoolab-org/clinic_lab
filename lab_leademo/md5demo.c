@@ -13,9 +13,9 @@
 
 /* ths structure MUST be exact the same as mbedtls_md5_context */
 typedef struct {
-    uint32_t total[2];          /*!< The number of Bytes processed.  */
-    uint32_t state[4];          /*!< The intermediate digest state.  */
-    unsigned char buffer[64];   /*!< The data block being processed. */
+	uint32_t total[2];        /*!< The number of Bytes processed.  */
+	uint32_t state[4];        /*!< The intermediate digest state.  */
+	unsigned char buffer[64]; /*!< The data block being processed. */
 }	HASH_CONTEXT;
 
 void hex_to_bytes(const char *hex, uint8_t *bytes, size_t byte_len) {
@@ -35,21 +35,21 @@ char * bytes_to_hex(const uint8_t *bytes, size_t byte_len, char *hex, size_t hex
 }
 
 int md5_padding(uint64_t message_len, uint8_t *padding, size_t padding_length) {
-    uint64_t bit_length = message_len * 8;
-    size_t pad_len = MD5_BLOCK_SIZE - (message_len % MD5_BLOCK_SIZE);
+	uint64_t bit_length = message_len * 8;
+	size_t pad_len = MD5_BLOCK_SIZE - (message_len % MD5_BLOCK_SIZE);
 
-    if (pad_len < 9) {
-        pad_len += MD5_BLOCK_SIZE;
-    }
+	if (pad_len < 9) {
+		pad_len += MD5_BLOCK_SIZE;
+	}
 
 	if(padding_length < pad_len) return -1;
 
 	padding[0] = 0x80;
-    memset(padding + 1, 0, pad_len - 9);
+	memset(padding + 1, 0, pad_len - 9);
 
-    for (int i = 0; i < 8; i++) {	// LITTLE-endian
-        padding[pad_len - 8 + i] = (uint8_t)(bit_length >> (8 * i));
-    }
+	for (int i = 0; i < 8; i++) {	// LITTLE-endian
+		padding[pad_len - 8 + i] = (uint8_t)(bit_length >> (8 * i));
+	}
 
 	return pad_len;
 }
