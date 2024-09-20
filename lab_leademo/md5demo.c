@@ -84,15 +84,28 @@ int length_extension_attack(const uint8_t *old_hash, const uint8_t *append_data,
 	return padding_len;
 }
 
+#ifdef SLIDE_SAMPLE
+static const char secret[] = "secret|";
+static const int  secret_len = sizeof(secret) - 1;
+static const char message[] = "action=deposit&money=100";
+static const int  msg_len = sizeof(message) - 1;
+static const char old_hash[] = "ceeff68a6bff37adc8dfccf6d5fb0a25";		// echo -n 'secret|action=deposit&money=100' | md5sum
+#else
 static const char secret[] = "unknownSecretKey";
 static const int  secret_len = sizeof(secret) - 1;
 static const char message[] = "message";
 static const int  msg_len = sizeof(message) - 1;
 static const char old_hash[] = "f98a9b28a0a6d3a680542b9d64502949";		// echo -n 'unknownSecretKeymessage' | md5sum
+#endif
+
 
 int main() {
 	char charbuf[256] = "";
+#ifdef SLIDE_SAMPLE
+	const char append[] = "&money=100000000";
+#else
 	const char append[] = ";admin=true";
+#endif
 	uint8_t output[MD5_DIGEST_SIZE];
 	mbedtls_md5_context ctx;
 	HASH_CONTEXT *pctx = (HASH_CONTEXT*) &ctx;
