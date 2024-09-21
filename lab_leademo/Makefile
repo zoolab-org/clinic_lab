@@ -1,7 +1,7 @@
 
 IMAGE	= chuang/lab-leademo
 
-CFLAGS	= -g -Wall $(shell pkg-config --cflags mbedtls mbedcrypto 2> /dev/null)
+CFLAGS	+= -g -Wall $(shell pkg-config --cflags mbedtls mbedcrypto 2> /dev/null)
 LDFLAGS	= $(shell pkg-config --libs mbedtls mbedcrypto 2> /dev/null || echo '-lmbedtls -lmbedcrypto')
 
 PROGS	= md5demo
