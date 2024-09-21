@@ -8,7 +8,6 @@ services:
   zap:
     image: zaproxy/zap-stable:latest
     networks:
-      - default
       - dvwa
     restart: unless-stopped
     volumes:

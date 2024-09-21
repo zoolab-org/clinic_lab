@@ -17,6 +17,10 @@ Please note that this lab *requires a significant amount of local storage*, as c
 
   Once everything is up and running, connect to the ZAP Desktop UI via [http://localhost:8080/zap](http://localhost:8080/zap)
 
+## Setup DVWA
+
+You may need to setup DVWA before running the ZAP scanner. Please visit [http://localhost:4280/](http://localhost:4280/), login with username `admin` and password `password`, and click the **Create / Reset Database** in the **Setup / Reset DB** page.
+
 ## Run the automation testing plan
 
 - Show the **Automation** Tab via the menu **View > Show Tab > Automation Tab**
