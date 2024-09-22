@@ -19,7 +19,7 @@ Please note that this lab *requires a significant amount of local storage*, as c
 
 ## Setup DVWA
 
-You may need to setup DVWA before running the ZAP scanner. Please visit [http://localhost:4280/](http://localhost:4280/), login with username `admin` and password `password`, and click the **Create / Reset Database** in the **Setup / Reset DB** page.
+You may need to setup DVWA before running the ZAP scanner. Please visit [http://localhost:4280/](http://localhost:4280/), login with username `admin` and password `password`, and click the **Create / Reset Database** in the **Setup DVWA** or **Setup / Reset DB** page.
 
 ## Run the automation testing plan
 
@@ -48,3 +48,25 @@ docker compose stop
 ```
 
 Replace `stop` with `start` if you plan to play with the lab again.
+
+## Reset Everything
+
+In case you need to cleanup and rebuild everything, please use the following instructions:
+
+- Stop and remove existing containers:
+  ```
+  docker compose stop
+  docker compose rm
+  ```
+
+- Remove the persistent storage
+  ```
+  docker volume rm lab_zap_dvwa
+  ```
+  You may use the command `docker volume ls` to confirm the name of the storage
+
+- Rebuild the containers
+  ```
+  docker compose up -d
+  ```
+
