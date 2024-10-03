@@ -1,0 +1,108 @@
+networks:
+  default:
+    driver: bridge
+    driver_opts:
+      com.docker.network.bridge.enable_ip_masquerade: 'true'
+      com.docker.network.bridge.gateway_mode_ipv4: 'nat'
+      com.docker.network.container_iface_prefix: 'eth'
+  lan:
+    driver: bridge
+    driver_opts:
+      com.docker.network.bridge.enable_ip_masquerade: 'false'
+      com.docker.network.bridge.gateway_mode_ipv4: 'routed'
+      com.docker.network.container_iface_prefix: 'eth1'
+  dmz:
+    driver: bridge
+    driver_opts:
+      com.docker.network.bridge.enable_ip_masquerade: 'false'
+      com.docker.network.bridge.gateway_mode_ipv4: 'routed'
+      com.docker.network.container_iface_prefix: 'eth2'
+
+services:
+  gw:
+    hostname: gw
+    container_name: labnet-gw
+    image: chuang/lab-net
+    pull_policy: build
+    build: .
+    restart: unless-stopped
+    command: [ "/usr/sbin/dnsmasq", "-k" ]
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    sysctls:
+      - net.ipv4.ip_forward=1
+    ports:
+      - 30080:80
+      - 30443:443
+    volumes:
+      - ./conf/dnsmasq.conf:/etc/dnsmasq.conf:ro
+      - ./scripts:/scripts:ro
+    networks:
+      - default
+      - lan
+      - dmz
+
+  outr:
+    hostname: outr
+    container_name: labnet-outr
+    image: chuang/lab-net
+    pull_policy: build
+    build: .
+    restart: unless-stopped
+    command: [ "/usr/sbin/sshd", "-E", "/dev/stderr", "-D" ]
+    ports:
+      - 127.0.0.1:30022:22/tcp
+    volumes:
+      - ./conf/sshd_config:/etc/ssh/sshd_config:ro
+    networks:
+      - default
+
+  web:
+    hostname: web
+    container_name: labnet-web
+    image: chuang/lab-net
+    pull_policy: build
+    build: .
+    restart: unless-stopped
+    command: [ "/usr/sbin/nginx", "-g", "daemon off;" ]
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    volumes:
+      - ./scripts:/scripts:ro
+      - ./html:/var/www/html:ro
+      - ./rsa:/rsa:ro
+    networks:
+      - dmz
+
+  user1:
+    hostname: user1
+    container_name: labnet-user1
+    image: chuang/lab-net
+    pull_policy: build
+    build: .
+    restart: unless-stopped
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    volumes:
+      - ./scripts:/scripts:ro
+    networks:
+      - lan
+
+  user2:
+    hostname: user2
+    container_name: labnet-user2
+    image: chuang/lab-net
+    pull_policy: build
+    build: .
+    restart: unless-stopped
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    volumes:
+      - ./scripts:/scripts:ro
+    networks:
+      - lan
+
