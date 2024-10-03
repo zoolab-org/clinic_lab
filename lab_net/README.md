@@ -17,6 +17,10 @@ This lab aims to practice setting up networking, NAT, port forwarding, and firew
 
 - To avoid the side-effects caused by docker's networking design, we use VXLAN to create overlay networks for LAN and DMZ nodes. You have to complete the ***Basic Networking & Routing Setup*** first.
 
+- The topology of the network is illustrated in the figure below.
+
+  <img src="https://github.com/zoolab-org/clinic_lab/blob/main/lab_net/netopo.png?raw=true" width="75%" alt="Network Topology">
+
 ## Access to the Outsider via SSH
 
 - If everything is brought up successfully, you should be able to access the outsider `outr` node using the ssh command:
