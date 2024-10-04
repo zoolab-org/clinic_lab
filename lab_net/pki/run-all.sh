@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash -e
 
 if [ -e ./ca ]; then
 	echo 'Directory ./ca already exists. Are you sure?'
@@ -21,11 +21,14 @@ openssl req -x509 -newkey rsa:4096 -sha256 -nodes -days 3650 \
 # generate server key and signing request
 openssl genrsa -out server_key.pem 2048
 openssl req -new -key server_key.pem -out server_key.csr -sha256 \
-	-subj "/C=TW/ST=Hsinchu/L=Hsinchu/O=zoo.ORG/OU=WebServer/CN=zoo.org"
+	-subj "/C=TW/ST=Hsinchu/L=Hsinchu/O=zoo.ORG/OU=WebServer/CN=local.zoolab.org" \
+	-addext "subjectAltName = DNS:local.zoolab.org"
 
 # sign the signing request
-openssl ca -batch -in server_key.csr -out server_cert.pem \
-	-md sha256 -cert zooCA_cert.pem -keyfile zooCA_key.pem
+openssl ca -batch -in server_key.csr -out server_cert.pem -days 730 \
+	-md sha256 -cert zooCA_cert.pem -keyfile zooCA_key.pem \
+	-extfile <(cat /etc/ssl/openssl.cnf <(printf "[SAN]\nsubjectAltName=DNS:local.zoolab.org")) \
+	-extensions SAN
 
 # merge server key and certificate
 cat server_key.pem server_cert.pem > server.pem

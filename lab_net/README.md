@@ -86,3 +86,15 @@ This lab aims to practice setting up networking, NAT, port forwarding, and firew
 
 - Once you are done, run `ping 10.140.112.1` from the `web` node, and you should ***NOT*** receive any response.
 
+## HTTPS
+
+- Your job is to run the HTTPS version of the website in the `web` server.
+
+- To prevent you from breaking existing HTTP configuration, you may run another `nginx` instance configured to serve only HTTPS requests on port 443.
+
+- Once the HTTPS server is up, browse your HTTPS website to ensure that the certificate is correctly loaded.
+
+- Try to install the CA certificate in your browser (or OS) to ensure that your browser can automatically validate the web server's certificate.
+
+- DO NOT forget to remove the CA certificate used for labs from your browser (and OS)
+
