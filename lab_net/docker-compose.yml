@@ -55,6 +55,7 @@ services:
       - 127.0.0.1:30022:22/tcp
     volumes:
       - ./conf/sshd_config:/etc/ssh/sshd_config:ro
+      - ./pki:/pki:ro
     networks:
       - default
 
@@ -72,7 +73,7 @@ services:
     volumes:
       - ./scripts:/scripts:ro
       - ./html:/var/www/html:ro
-      - ./rsa:/rsa:ro
+      - ./pki:/pki:ro
     networks:
       - dmz
 
