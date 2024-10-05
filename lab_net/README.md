@@ -70,13 +70,13 @@ This lab aims to practice setting up networking, NAT, port forwarding, and firew
 
 - Once the configuration is done, run the command `curl gw` in the `outr` node, and you should see a cute cat looking at you!
 
-- You may also access the web server using your browser. Try to visit the link at [http://localhsot:30080/](http://localhsot:30080/). Note that it may not work for Docker Desktop running on Mac OS X.
+- You may also access the web server using your browser. Try to visit the link at [http://localhost:30080/](http://localhost:30080/). Note that it may not work for Docker Desktop running on Mac OS X.
 
 - Alternatively, you may create an SSH tunnel to access the website from your browser. The tunnel can be created using the command:
 
   `ssh -p 30022 -i ./conf/ssh/id_ed25519 root@localhost -L 20080:gw:80 -L 20443:gw:443`
 
-  Once the tunnel has been created, you can access the website from your desktop browser via the link at [http://localhsot:20080/](http://localhsot:20080/).
+  Once the tunnel has been created, you can access the website from your desktop browser via the link at [http://localhost:20080/](http://localhost:20080/).
 
 ## Firewall Setup
 
